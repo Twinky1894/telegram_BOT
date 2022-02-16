@@ -1,17 +1,10 @@
 
 from start_bot import dp, bot
-from aiogram import types
-from aiogram.utils import executor
-from aiogram.dispatcher import Dispatcher
+from aiogram import types, Dispatcher,executor
 from aiogram.dispatcher.filters import Text
+from keyboards import kb_start, kb_questions, kb_location, kb_url
 
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardMarkup
 
-buttons_start = ['Наши сервисные центры','Часто задаваемые вопросы','Консультация инженера','Информация о платных ремонтах']
-
-kb_start = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-
-kb_start.add(*buttons_start)
 
 async def command_start(message : types.Message):
     
@@ -19,27 +12,13 @@ async def command_start(message : types.Message):
      #await message.delete()
 
 async def addresses(message : types.Message):
-    kb_location = InlineKeyboardMarkup()
-    b_location_1 = KeyboardButton('Как добраться до Вершины',callback_data="addres")
-    kb_location.add(b_location_1)
-    b_location_2 = KeyboardButton('Как добраться до Агоры',callback_data="addres")
-    kb_location.add(b_location_2)
-    
     await message.delete()
     await bot.send_message(message.from_user.id, 'В городе Сургут находятся 2 пункта приема техники в ремонт : \n\n1)​Генерала Иванова 1, ТЦ Вершина, второй этаж \nВремя работы 10:00-22:00 без выходных \n\n2)​Профсоюзов 11, ТЦ Агора, второй этаж \nВремя работы 10:00-22:00 без выходных \n\nНо вы всегда можете сдать товар в любом магазине!',reply_markup=kb_location)
 
 async def addres(call: types.CallbackQuery):
-    await call.answer(text="Тут будет карта", show_alert=True)
+    await call.answer(text='Тут будет карта', show_alert=True)
 
 async def faq(message : types.Message):
-    kb_questions = InlineKeyboardMarkup()
-    b_question_1 = KeyboardButton('На какие случаи не распространяется гарантия?',callback_data="faq_warranty")
-    kb_questions.add(b_question_1)
-    b_question_2 = KeyboardButton('Потерян чек. Что делать?',callback_data="faq_lost")
-    kb_questions.add(b_question_2)
-    b_question_3 = KeyboardButton('Что делать если нет возможности привезти товар в сервисный центр?',callback_data="faq_delivery")
-    kb_questions.add(b_question_3)
-
     #await message.delete()
     await bot.send_message(message.from_user.id,'Выберите интересующий вас вопрос:\n',reply_markup=kb_questions)
 
@@ -60,11 +39,6 @@ async def consult(message : types.Message):
     await bot.send_message(message.from_user.id,'Этот раздел пока дорабатывается.')
 
 async def paid_repair(message : types.Message):
-
-    burl = KeyboardButton('Прайс-лист', url="https://www.dns-shop.ru/service-center/paid-repair/")
-    kb_url = InlineKeyboardMarkup()
-    kb_url.add(burl)
-    
     #await message.delete()
     await message.answer('Просто решаем сложные проблемы.\nРемонтируем цифровую и бытовую технику.\nПочему вы должны пойти именно к нам?\nБесплатная диагностика и консультация\nКвалифицированные специалисты\nГарантия 3 месяца на замененные компоненты и работу.\nШирокий ассортимент запчастей\n35 мировых бренда доверили нам право ремонтировать их устройства.Компании: Apple, Epson, Brother, Canon, Xiaomi, Indesit и другие')
     await bot.send_message(message.from_user.id,'С прайс-листом вы можете ознакомиться по ссылке', reply_markup=kb_url)
@@ -72,7 +46,6 @@ async def paid_repair(message : types.Message):
 async def call_back(message : types.Message):
     await message.delete()
     await bot.send_message(message.from_user.id,'Этот раздел пока дорабатывается.')
-
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(command_start, commands=['start','help'])

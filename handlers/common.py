@@ -1,6 +1,7 @@
-import json, string
+import json, string, time
 from aiogram import types, Dispatcher
 from start_bot import dp,bot
+from handlers import client
 
 async def stop_words(message : types.Message):
     if{i.lower().translate(str.maketrans('','',string.punctuation)) for i in message.text.split(' ')}\
