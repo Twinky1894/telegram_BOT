@@ -2,12 +2,12 @@
 from start_bot import dp, bot
 from aiogram import types, Dispatcher,executor
 from aiogram.dispatcher.filters import Text
-from keyboards import kb_start, kb_questions, kb_location, kb_url
+from keyboards import kb_start, kb_questions, kb_location, kb_url, kb_consult
 
 async def command_start(message : types.Message):
     #await message.delete()
+    print('Пользователь ' + str(message.from_user.id) + ' подключился')
     await bot.send_message(message.from_user.id, '✋Этот бот предназначен для ответов на вопросы и для помощи в диагностике и выявлении неисправности устройств.\n\n Давайте попробуем! Выберите интересующий вас пункт', reply_markup=kb_start)
-     #await message.delete()
 
 async def addresses(message : types.Message):
     #await message.delete()
@@ -39,25 +39,31 @@ async def faq_delivery(call: types.CallbackQuery):
 
 async def consult(message : types.Message):
     #await message.delete()
-    await bot.send_message(message.from_user.id,'Этот раздел пока дорабатывается.')
+    await bot.send_message(message.from_user.id,'Выберите необходимый  пункт', reply_markup=kb_consult)
+
+async def consult_spec(message : types.Message):
+    await bot.send_message(message.from_user.id,'Выберите необходимый  пункт', reply_markup=kb_consult)
+    
+async def consult_engineer(message : types.Message):
+    await bot.send_message(message.from_user.id,'Выберите необходимый  пункт', reply_markup=kb_consult)
 
 async def paid_repair(message : types.Message):
     #await message.delete()
     await message.answer('Просто решаем сложные проблемы.\nРемонтируем цифровую и бытовую технику.\nПочему вы должны пойти именно к нам?\nБесплатная диагностика и консультация\nКвалифицированные специалисты\nГарантия 3 месяца на замененные компоненты и работу.\nШирокий ассортимент запчастей\n35 мировых бренда доверили нам право ремонтировать их устройства.Компании: Apple, Epson, Brother, Canon, Xiaomi, Indesit и другие')
     await bot.send_message(message.from_user.id,'С прайс-листом вы можете ознакомиться по ссылке', reply_markup=kb_url)
 
-async def call_back(message : types.Message):
+async def feed_back(message : types.Message):
     #await message.delete()
     await bot.send_message(message.from_user.id,'Этот раздел пока дорабатывается.')
 
 def register_handlers_client(dp : Dispatcher):
     dp.register_message_handler(command_start, commands=['start','help'])
 
-    dp.register_message_handler(consult, text="🙋‍♂️Консультация инженера")
+    dp.register_message_handler(consult, text="🙋‍♂️Консультация")
     dp.register_message_handler(paid_repair, text="ℹ️Информация о платных ремонтах")
-    dp.register_message_handler(call_back, text="⭐️Обратная связь")
+    dp.register_message_handler(feed_back, text="⭐️Обратная связь")
 
-    dp.register_message_handler(addresses, text="📍Наши сервисные центры")
+    dp.register_message_handler(addresses, text="🚩Наши сервисные центры")
     dp.register_callback_query_handler(addres_1, text="addres_1")
     dp.register_callback_query_handler(addres_2, text="addres_2")
 

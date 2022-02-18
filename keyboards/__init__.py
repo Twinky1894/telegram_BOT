@@ -1,1 +1,1 @@
-from keyboards.client_kb import kb_start, kb_questions, kb_location, kb_url
+from keyboards.client_kb import kb_start, kb_questions, kb_location, kb_url, kb_consult

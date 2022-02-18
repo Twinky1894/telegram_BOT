@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, InlineKeyboardMarkup
 
 kb_start = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-buttons_start = ['📍Наши сервисные центры','🙋‍♂️Консультация инженера','❓Часто задаваемые вопросы','ℹ️Информация о платных ремонтах','⭐️Обратная связь']
+buttons_start = ['🚩Наши сервисные центры','🙋‍♂️Консультация','❓Часто задаваемые вопросы','ℹ️Информация о платных ремонтах','⭐️Обратная связь']
 kb_start.add(*buttons_start)
 
 ###########################################################################
@@ -27,3 +27,10 @@ kb_location.add(b_location_2)
 kb_url = InlineKeyboardMarkup()
 burl = KeyboardButton('Прайс-лист', url="https://www.dns-shop.ru/service-center/paid-repair/")
 kb_url.add(burl)
+
+###########################################################################
+
+kb_consult = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+buttons_consult = ['Запросить статус ремонта','Получить консультацию','Вернуться в главное меню']
+kb_consult.add(*buttons_consult)
+
